@@ -7,15 +7,15 @@ import type { socialDataType } from "../types/initialTypes";
 const socialData: socialDataType[] = [
     {
         id: 1,
-        name: 'GitHub',
-        url: 'https://github.com',
-        icon: GitHubIcon
-    },
-    {
-        id: 2,
         name: 'Discord',
         url: 'https://discord.com',
         icon: DiscordIcon
+    },
+    {
+        id: 2,
+        name: 'GitHub',
+        url: 'https://github.com',
+        icon: GitHubIcon
     },
     {
         id: 3,
