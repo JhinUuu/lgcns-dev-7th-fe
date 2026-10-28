@@ -1,8 +1,9 @@
 import heroImg from '../assets/hero.png'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '../assets/vite.svg'
+import CountBtn from './CountBtn'
 
-export default function CenterHero({ count, setCount }: { count: number, setCount: (count: number) => void }) {
+export default function CenterHero({ count, setCount }: { count: number | undefined, setCount: (count: number) => void }) {
 
     return (
         <section id="center">
@@ -24,13 +25,7 @@ export default function CenterHero({ count, setCount }: { count: number, setCoun
         >
           Count is {cnt}
         </button> */}
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount(count + 1)}
-        >
-          Count is {count}
-        </button>
+        <CountBtn count={count || 0} setCount={setCount} />
       </section>
     )
 }
