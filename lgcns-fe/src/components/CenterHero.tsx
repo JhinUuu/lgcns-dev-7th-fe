@@ -3,7 +3,7 @@ import reactLogo from '../assets/react.svg'
 import viteLogo from '../assets/vite.svg'
 import CountBtn from './CountBtn'
 
-export default function CenterHero({ count, setCount }: { count: number | undefined, setCount: (count: number) => void }) {
+export default function CenterHero() {
 
     return (
         <section id="center">
@@ -25,7 +25,7 @@ export default function CenterHero({ count, setCount }: { count: number | undefi
         >
           Count is {cnt}
         </button> */}
-        <CountBtn count={count || 0} setCount={setCount} />
+        <CountBtn />
       </section>
     )
 }
