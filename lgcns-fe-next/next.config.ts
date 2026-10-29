@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "i.pinimg.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "www.lgcns.com",
+        pathname: "/**",
+      },
     ],
   },
   experimental: {
