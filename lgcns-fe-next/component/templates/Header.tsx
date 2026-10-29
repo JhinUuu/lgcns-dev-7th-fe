@@ -3,7 +3,7 @@ import GlobalNavigation from "../organisms/GlobaNavigation";
 
 export default function Header(){
     return (
-        <header>
+        <header className="container mx-auto flex flex-row justify-between items-center gap-10 px-4 py-8">
             <Logo />
             <GlobalNavigation />
         </header>
