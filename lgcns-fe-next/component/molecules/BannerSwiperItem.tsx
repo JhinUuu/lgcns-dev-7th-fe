@@ -1,4 +1,5 @@
 import Image from "next/image";
+import CustomTitle from "../atoms/CustomTitle";
 
 export default function BannerSwiperItem() {
     return (
@@ -9,7 +10,10 @@ export default function BannerSwiperItem() {
                 width={1000}
                 height={1000}
             />
-            <h3>Cat Banner</h3>
+            <CustomTitle 
+                TitleType="h3"  
+                className="text-red-500"
+            >Cat Banner Title</CustomTitle>
             <p>Cat Banner Description</p>
             <button>View More</button>
         </div>
