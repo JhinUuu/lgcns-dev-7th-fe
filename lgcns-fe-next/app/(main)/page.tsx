@@ -1,10 +1,13 @@
+import HeroSection from "@/component/templates/HeroSection";
+import AboutSection from "@/component/templates/AboutSection";
 
 export default function Home() {
   
   return (
   <>
-  {/* Hero Section */}
-  {/* About Section */}
+    {/* Hero Section */}
+    <HeroSection />
+    <AboutSection />
   </>
   );
 }
