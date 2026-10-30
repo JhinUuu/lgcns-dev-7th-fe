@@ -1,9 +1,9 @@
 import Logo from "../organisms/Logo";
-import GlobalNavigation from "../organisms/GlobalNavigation";
+import GlobalNavigation from "../organisms/GlobaNavigation";
 
 export default function Header(){
     return (
-        <header className="flex flex-row justify-between items-center gap-10 h-125 px-20">
+        <header className="container mx-auto flex flex-row justify-between items-center gap-10 px-4 py-8">
             <Logo />
             <GlobalNavigation />
         </header>
