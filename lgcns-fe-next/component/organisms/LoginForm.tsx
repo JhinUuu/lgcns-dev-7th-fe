@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { signIn } from "next-auth/react";
 import { Check } from "lucide-react";
 
@@ -12,8 +12,6 @@ import { UserPayloadType } from "@/types/request/RequestType";
 import { emptyErrors } from "@/types/error/loginError";
 import loginSchema, { loginFieldMessage } from "@/schema/loginSchema";
 
-const SAVED_USER_ID_KEY = "lgcns-saved-user-id";
-
 type LoginFieldName = keyof UserPayloadType;
 
 const inputClassName =
@@ -22,25 +20,21 @@ const inputClassName =
 const fieldErrorClassName = "py-1 text-[12px] leading-[normal] text-red-500";
 
 export default function LoginForm({ callbackUrl }: { callbackUrl: string }) {
-  const [payload, setPayload] = useState(initialValues);
+  const [userId, setUserId] = useState(initialValues.userId);
+  const [password, setPassword] = useState(initialValues.password);
+  const [rememberId, setRememberId] = useState(false);
+  const payload: UserPayloadType = { userId, password };
   const [errors, setErrors] = useState(emptyErrors);
   const [formError, setFormError] = useState("");
-  const [rememberId, setRememberId] = useState(false);
   const isValid = loginSchema.safeParse(payload).success;
   const [isPending, startTransition] = useTransition();
-
-  useEffect(() => {
-    const savedUserId = window.localStorage.getItem(SAVED_USER_ID_KEY);
-    if (!savedUserId) return;
-    setRememberId(true);
-    setPayload((current) => ({ ...current, userId: savedUserId }));
-  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name !== "userId" && name !== "password") return;
     const field: LoginFieldName = name;
-    setPayload((current) => ({ ...current, [field]: value }));
+    if (field === "userId") setUserId(value);
+    else setPassword(value);
     setErrors((current) => ({
       ...current,
       [field]: loginFieldMessage(field, value),
@@ -57,9 +51,6 @@ export default function LoginForm({ callbackUrl }: { callbackUrl: string }) {
       return;
     }
 
-    if (rememberId) window.localStorage.setItem(SAVED_USER_ID_KEY, payload.userId);
-    else window.localStorage.removeItem(SAVED_USER_ID_KEY);
-
     setFormError("");
     startTransition(async () => {
       await signIn("credentials", {
@@ -75,7 +66,10 @@ export default function LoginForm({ callbackUrl }: { callbackUrl: string }) {
     <form onSubmit={handleSubmit} className="flex w-full flex-col gap-6">
       <div className="flex w-full flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <label htmlFor="userId" className="text-[14px] font-medium leading-[normal] text-[#374151]">
+          <label
+            htmlFor="userId"
+            className="text-[14px] font-medium leading-[normal] text-[#374151]"
+          >
             아이디
           </label>
           <FormField
@@ -94,7 +88,10 @@ export default function LoginForm({ callbackUrl }: { callbackUrl: string }) {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label htmlFor="password" className="text-[14px] font-medium leading-[normal] text-[#374151]">
+          <label
+            htmlFor="password"
+            className="text-[14px] font-medium leading-[normal] text-[#374151]"
+          >
             비밀번호
           </label>
           <FormField
@@ -128,14 +125,25 @@ export default function LoginForm({ callbackUrl }: { callbackUrl: string }) {
                 strokeWidth={3}
               />
             </span>
-            <span className="text-[14px] leading-[normal] whitespace-nowrap text-[#4b5563]">아이디 저장하기</span>
+            <span className="text-[14px] leading-[normal] whitespace-nowrap text-[#4b5563]">
+              아이디 저장하기
+            </span>
           </label>
-          <button type="button" className="text-right text-[14px] leading-[normal] font-semibold whitespace-nowrap text-[#2563eb]">
+          <button
+            type="button"
+            className="text-right text-[14px] leading-[normal] font-semibold whitespace-nowrap text-[#2563eb]"
+          >
             비밀번호 찾기 / 아이디 찾기
           </button>
         </div>
       </div>
-      {formError ? <ErrorMessage id="login-error" error={formError} className={fieldErrorClassName} /> : null}
+      {formError ? (
+        <ErrorMessage
+          id="login-error"
+          error={formError}
+          className={fieldErrorClassName}
+        />
+      ) : null}
       <Button
         type="submit"
         aria-busy={isPending}
